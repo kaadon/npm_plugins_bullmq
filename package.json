@@ -1,0 +1,38 @@
+{
+  "name": "@kaadon.com/bullmq",
+  "version": "0.0.1",
+  "description": "kaadon.com's plugins bullmq",
+  "keywords": [
+    "kaadon",
+    "plugins",
+    "bullmq"
+  ],
+  "main": "bullmq/index.js",
+  "author": "kaadon.com",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src --out-dir bullmq"
+  },
+  "files": [
+    "/bullmq"
+  ],
+  "dependencies": {
+    "@kaadon.com/database": "^0.0.1",
+    "bullmq": "^4.12.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kaadon/npm_plugins_bullmq.git"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7",
+    "@babel/core": "^7",
+    "@babel/generator": "^7",
+    "@babel/parser": "^7",
+    "@babel/preset-env": "^7",
+    "dotenv": "^16.3.1"
+  }
+}
