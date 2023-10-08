@@ -17,8 +17,8 @@
     "/bullmq"
   ],
   "dependencies": {
-    "@kaadon.com/database": "^0.0.1",
-    "bullmq": "^4.12.0"
+    "@kaadon.com/database": "0.0.2",
+    "bullmq": "4.12.2"
   },
   "publishConfig": {
     "access": "public"

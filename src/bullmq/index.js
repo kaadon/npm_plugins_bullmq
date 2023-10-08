@@ -1,9 +1,9 @@
 import {Queue, Worker} from 'bullmq';
-import {redis} from "@kaadon.com/database";
+import {redisDB} from "@kaadon.com/database";
 
 export async function job_push({queueName, jobName, jobData}) {
     try {
-        let connection = redis()
+        let connection = redisDB()
         //逻辑代码
         const queue = new Queue(`bullMQ:${queueName}`, {connection});
         if (Array.isArray(jobData)) {
