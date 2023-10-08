@@ -26,7 +26,7 @@ export function job_worker({
                                completed,
                                failed
                            }) {
-    let connection = redis()
+    let connection = redisDB()
     const myWorker = new Worker(`bullMQ:${queueName}`, async (job) => {
         const job_name = Object.keys(jobName).find(item => item === job.name)
         if (job_name) await jobName[job_name](job.data)
