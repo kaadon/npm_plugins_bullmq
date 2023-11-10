@@ -1,6 +1,6 @@
 {
   "name": "@kaadon.com/bullmq",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "kaadon.com's plugins bullmq",
   "keywords": [
     "kaadon",
@@ -17,8 +17,8 @@
     "/bullmq"
   ],
   "dependencies": {
-    "@kaadon.com/database": "0.0.2",
-    "bullmq": "4.12.2"
+    "@kaadon.com/database": "^0.1.4",
+    "bullmq": "4.13.2"
   },
   "publishConfig": {
     "access": "public"

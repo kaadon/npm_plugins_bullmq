@@ -40,15 +40,15 @@ export function mq_worker(queueName, JobObject) {
     if (!Array.isArray(JobObject)) throw new Error("JobObject 格式错误");
     let connection = redisDB()
     const myWorker = new Worker(`bullMQ:${queueName}`, async (job) => {
-        let jobFunc = Object.keys(JobObject).find(item => item.name === job.name)
+        let jobFunc = JobObject.find(item => item.name === job.name)
         if (typeof jobFunc?.run === "function") await jobFunc.run(job.data)
     }, {connection});
-    myWorker.on('completed', (job) => {
-        let jobFuncCompleted = Object.keys(JobObject).find(item => item.name === job.name)
-        if (typeof jobFuncCompleted?.completed === "function") jobFuncCompleted.completed(job);
+    myWorker.on('completed', async (job) => {
+        let jobFuncCompleted = JobObject.find(item => item.name === job.name)
+        if (typeof jobFuncCompleted?.completed === "function") await jobFuncCompleted.completed(job);
     });
-    myWorker.on('failed', (job) => {
-        let jobFuncFailed = Object.keys(JobObject).find(item => item.name === job.name)
-        if (typeof jobFuncFailed?.failed === "function") jobFuncFailed.failed(job);
+    myWorker.on('failed', async (job) => {
+        let jobFuncFailed = JobObject.find(item => item.name === job.name)
+        if (typeof jobFuncFailed?.failed === "function") await jobFuncFailed.failed(job);
     });
 }
