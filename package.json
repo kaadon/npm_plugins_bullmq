@@ -11,7 +11,8 @@
   "author": "kaadon.com",
   "license": "MIT",
   "scripts": {
-    "build": "babel src --out-dir bullmq"
+    "build": "babel src --out-dir bullmq",
+    "publish": "babel src --out-dir bullmq;npm publish "
   },
   "files": [
     "/bullmq"
