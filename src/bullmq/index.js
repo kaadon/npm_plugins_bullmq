@@ -1,4 +1,4 @@
-import {Queue, Worker} from 'bullmq';
+import {Queue, Worker, QueueScheduler} from 'bullmq';
 import {redisDB} from "@kaadon.com/database";
 
 export async function job_push({queueName, jobName, jobData}) {
@@ -13,7 +13,7 @@ export async function job_push({queueName, jobName, jobData}) {
         } else {
             await queue.add(jobName, jobData, {removeOnComplete: true});
         }
-        connection.quit()
+        await connection.quit()
         return Promise.resolve()
     } catch (e) {
         return Promise.reject(e.message)
@@ -35,6 +35,30 @@ export function job_worker({
     myWorker.on('failed', (job) => failed(job));
 }
 
+export const mq_push = async (queueName, jobName, jobData, JobsOptions = {}) => {
+    try {
+        //逻辑代码
+        let connection = redisDB()
+        const queue = new Queue(`bullMQ:${queueName}`, {connection});
+        let result = []
+        if (Array.isArray(jobData)) {
+            for (const item of jobData) {
+                result.push(await queue.add(jobName, item, JobsOptions));
+            }
+        } else {
+            result.push(await queue.add(jobName, jobData, JobsOptions))
+        }
+        return Promise.resolve(result)
+    } catch (e) {
+        return Promise.reject(e)
+    }
+}
+
+export const mq_helper =async (queueName) => {
+    let connection = redisDB()
+    const queueScheduler = new QueueScheduler(queueName, { connection: connection });
+    await queueScheduler.waitUntilReady();
+}
 
 export function mq_worker(queueName, JobObject) {
     if (!Array.isArray(JobObject)) throw new Error("JobObject 格式错误");
